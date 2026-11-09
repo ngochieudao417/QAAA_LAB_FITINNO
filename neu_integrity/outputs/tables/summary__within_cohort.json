@@ -1,0 +1,420 @@
+{
+  "che_do_hieu_chinh": "within_cohort",
+  "thoi_gian_chay_giay": 8.93,
+  "du_lieu": {
+    "tong_luot_diem": 38342,
+    "luot_hoc_phan_lop": 36239,
+    "luot_do_an_thuc_tap": 2103,
+    "luot_cham_duoc": 34693,
+    "luot_diem_0_nghi_vang_thi": 831,
+    "luot_thieu_diem": 1019,
+    "so_sinh_vien": 5067,
+    "so_lop_hoc_phan": 877,
+    "so_mon": 93,
+    "nam_hoc": [
+      "2019-2020",
+      "2020-2021",
+      "2021-2022",
+      "2022-2023",
+      "2023-2024",
+      "2024-2025",
+      "2025-2026"
+    ]
+  },
+  "mo_hinh_nang_luc_do_de": {
+    "mu": 7.7233,
+    "sigma_phan_du": 0.9813,
+    "r_binh_phuong": 0.562,
+    "so_vong_lap": 32,
+    "hoi_tu": true,
+    "sd_nang_luc_theta": 0.5248,
+    "sd_do_de_delta": 0.5929,
+    "sd_do_de_bat_thuong_r": 0.3972,
+    "hieu_ung_nam_hoc": {
+      "0": -0.3036,
+      "1": -0.0463,
+      "2": 0.1379,
+      "3": -0.1119,
+      "4": 0.0549,
+      "5": 0.0843,
+      "6": 0.205
+    },
+    "hieu_ung_hoc_ky": {
+      "0": 0.0539,
+      "1": 0.0272,
+      "2": -0.0756
+    }
+  },
+  "giai_phap_1": {
+    "so_lop_cham_diem": 773,
+    "so_lop_gan_co": 28,
+    "ty_le_gan_co_pct": 3.62,
+    "so_lop_critical": 7,
+    "phan_bo_nhan": {
+      "NORMAL": 735,
+      "HIGH_INFLATION": 10,
+      "SUSPICIOUS_DISTRIBUTION": 10,
+      "INSUFFICIENT_DATA": 10,
+      "UNUSUALLY_STEEP": 8
+    },
+    "diem_bat_thuong_cao_nhat": 0.9372,
+    "tuong_quan_spearman_voi_isolation_forest": 0.6361
+  },
+  "giai_phap_2": {
+    "so_lop_hieu_chinh": 54,
+    "so_lop_ha_muc": 38,
+    "so_lop_nang_muc": 16,
+    "so_lop_gian_lai_sigma": 31,
+    "so_lop_cham_tran_bien_do": 2,
+    "luot_diem_thay_doi": 1764,
+    "ty_le_luot_thay_doi_pct": 5.08,
+    "diem_tb_goc": 7.7306,
+    "diem_tb_hieu_chinh": 7.7256,
+    "bien_do_dich_lon_nhat": 2.36,
+    "so_luot_review_required": 1515,
+    "kiem_chung_tinh_chat": {
+      "trong_khoang_0_10": true,
+      "bao_toan_thu_hang_moi_lop": true,
+      "so_cap_bi_dao_thu_tu": 0,
+      "so_lop_kiem_thu_thu_hang": 774,
+      "spearman_nho_nhat_co_gia_tri_bang_nhau": 0.9999999999999998,
+      "lop_sach_khong_doi_diem": true,
+      "so_luot_lop_sach": 32819,
+      "bien_do_dich_lon_nhat": 2.3599999999999994
+    }
+  },
+  "giai_phap_3": {
+    "so_sinh_vien": 4990,
+    "so_sinh_vien_xep_loai_duoc": 3741,
+    "so_sinh_vien_unrated": 1249,
+    "tci_trung_binh": 3.1726,
+    "gpa_danh_nghia_trung_binh": 3.1794,
+    "chenh_tci_gpa": -0.0067,
+    "so_sinh_vien_doi_nhan": 141,
+    "ty_le_doi_nhan_pct": 3.77,
+    "phan_bo_tang_tin_cay": {
+      "LOW": 2400,
+      "HIGH": 1385,
+      "MEDIUM": 1205
+    },
+    "ty_le_nhan_vung_theo_tang": {
+      "HIGH": 5.34,
+      "LOW": 2.69,
+      "MEDIUM": 2.41
+    },
+    "phan_phoi_truoc_sau": [
+      {
+        "band": "Advanced",
+        "truoc_n": 1097,
+        "sau_n": 1077,
+        "truoc_pct": 29.32,
+        "sau_pct": 28.79,
+        "chenh_n": -20,
+        "chenh_pct": -0.53
+      },
+      {
+        "band": "Proficient",
+        "truoc_n": 1102,
+        "sau_n": 1088,
+        "truoc_pct": 29.46,
+        "sau_pct": 29.08,
+        "chenh_n": -14,
+        "chenh_pct": -0.38
+      },
+      {
+        "band": "Intermediate",
+        "truoc_n": 1044,
+        "sau_n": 1033,
+        "truoc_pct": 27.91,
+        "sau_pct": 27.61,
+        "chenh_n": -11,
+        "chenh_pct": -0.3
+      },
+      {
+        "band": "At-Risk",
+        "truoc_n": 498,
+        "sau_n": 543,
+        "truoc_pct": 13.31,
+        "sau_pct": 14.51,
+        "chenh_n": 45,
+        "chenh_pct": 1.2
+      }
+    ],
+    "ma_tran_chuyen_nhan": {
+      "Advanced": {
+        "Advanced": 1070,
+        "Proficient": 27,
+        "Intermediate": 0,
+        "At-Risk": 0
+      },
+      "Proficient": {
+        "Advanced": 7,
+        "Proficient": 1055,
+        "Intermediate": 40,
+        "At-Risk": 0
+      },
+      "Intermediate": {
+        "Advanced": 0,
+        "Proficient": 6,
+        "Intermediate": 985,
+        "At-Risk": 53
+      },
+      "At-Risk": {
+        "Advanced": 0,
+        "Proficient": 0,
+        "Intermediate": 8,
+        "At-Risk": 490
+      }
+    }
+  },
+  "tac_dong_theo_nam_hoc": [
+    {
+      "academic_year": "2019-2020",
+      "diem_goc": 6.9795,
+      "diem_hieu_chinh": 6.9737,
+      "n": 3641,
+      "chenh": -0.0058
+    },
+    {
+      "academic_year": "2020-2021",
+      "diem_goc": 7.4628,
+      "diem_hieu_chinh": 7.4593,
+      "n": 4645,
+      "chenh": -0.0035
+    },
+    {
+      "academic_year": "2021-2022",
+      "diem_goc": 7.8551,
+      "diem_hieu_chinh": 7.8536,
+      "n": 4907,
+      "chenh": -0.0015
+    },
+    {
+      "academic_year": "2022-2023",
+      "diem_goc": 7.5681,
+      "diem_hieu_chinh": 7.5744,
+      "n": 4869,
+      "chenh": 0.0064
+    },
+    {
+      "academic_year": "2023-2024",
+      "diem_goc": 7.8758,
+      "diem_hieu_chinh": 7.8719,
+      "n": 4923,
+      "chenh": -0.0039
+    },
+    {
+      "academic_year": "2024-2025",
+      "diem_goc": 7.9315,
+      "diem_hieu_chinh": 7.9131,
+      "n": 5488,
+      "chenh": -0.0184
+    },
+    {
+      "academic_year": "2025-2026",
+      "diem_goc": 8.1069,
+      "diem_hieu_chinh": 8.1006,
+      "n": 6220,
+      "chenh": -0.0063
+    }
+  ],
+  "tac_dong_theo_khoa": [
+    {
+      "cohort": "K56",
+      "n": 3,
+      "gpa_danh_nghia": 1.6891,
+      "tci": 1.7168,
+      "chenh": 0.0277
+    },
+    {
+      "cohort": "K57",
+      "n": 10,
+      "gpa_danh_nghia": 1.9089,
+      "tci": 1.9272,
+      "chenh": 0.0183
+    },
+    {
+      "cohort": "K58",
+      "n": 70,
+      "gpa_danh_nghia": 2.6515,
+      "tci": 2.6527,
+      "chenh": 0.0012
+    },
+    {
+      "cohort": "K59",
+      "n": 94,
+      "gpa_danh_nghia": 2.555,
+      "tci": 2.545,
+      "chenh": -0.01
+    },
+    {
+      "cohort": "K60",
+      "n": 330,
+      "gpa_danh_nghia": 3.0676,
+      "tci": 3.0537,
+      "chenh": -0.0139
+    },
+    {
+      "cohort": "K61",
+      "n": 480,
+      "gpa_danh_nghia": 2.9872,
+      "tci": 2.9931,
+      "chenh": 0.0059
+    },
+    {
+      "cohort": "K62",
+      "n": 484,
+      "gpa_danh_nghia": 3.0513,
+      "tci": 3.0673,
+      "chenh": 0.016
+    },
+    {
+      "cohort": "K63",
+      "n": 458,
+      "gpa_danh_nghia": 3.1845,
+      "tci": 3.1836,
+      "chenh": -0.001
+    },
+    {
+      "cohort": "K64",
+      "n": 506,
+      "gpa_danh_nghia": 3.3492,
+      "tci": 3.3432,
+      "chenh": -0.006
+    },
+    {
+      "cohort": "K65",
+      "n": 521,
+      "gpa_danh_nghia": 3.4663,
+      "tci": 3.4219,
+      "chenh": -0.0444
+    },
+    {
+      "cohort": "K66",
+      "n": 466,
+      "gpa_danh_nghia": 3.3796,
+      "tci": 3.3688,
+      "chenh": -0.0107
+    },
+    {
+      "cohort": "K67",
+      "n": 314,
+      "gpa_danh_nghia": 3.0998,
+      "tci": 3.1035,
+      "chenh": 0.0037
+    }
+  ],
+  "cau_hinh": {
+    "ability": {
+      "max_iter": 60,
+      "tol": 1e-06,
+      "lambda_student": 3.0,
+      "lambda_class": 8.0,
+      "min_class_size": 5
+    },
+    "anomaly": {
+      "min_class_size": 15,
+      "a_rate_control": 0.6,
+      "sigma_floor": 0.8,
+      "sigma_critical": 0.5,
+      "ability_corr_floor": 0.3,
+      "ceiling_mass_control": 0.25,
+      "ceiling_score": 9.5,
+      "fail_rate_control": 0.3,
+      "floor_mass_control": 0.25,
+      "weights": {
+        "level": 0.3,
+        "dispersion": 0.2,
+        "a_rate": 0.18,
+        "decoupling": 0.17,
+        "shape": 0.15
+      },
+      "ramps": {
+        "level_z": [
+          1.0,
+          3.0
+        ],
+        "sigma_compression": [
+          0.25,
+          0.65
+        ],
+        "sigma_inflation": [
+          0.8,
+          2.0
+        ],
+        "a_rate_absolute": [
+          0.0,
+          0.25
+        ],
+        "a_rate_relative": [
+          0.1,
+          0.4
+        ],
+        "fail_rate_absolute": [
+          0.0,
+          0.25
+        ],
+        "fail_rate_relative": [
+          0.1,
+          0.4
+        ],
+        "decoupling": [
+          0.0,
+          0.4
+        ],
+        "ceiling": [
+          0.0,
+          0.35
+        ],
+        "floor": [
+          0.0,
+          0.35
+        ],
+        "discreteness": [
+          0.0,
+          0.2
+        ],
+        "skewness": [
+          1.0,
+          2.5
+        ]
+      },
+      "discreteness_control": 0.3,
+      "resonance_bonus_per_signal": 0.05,
+      "subscore_active_threshold": 0.5,
+      "level_alone_weight": 0.55,
+      "level_alone_min_subscore": 0.6,
+      "low_power_discount": 0.5,
+      "score_flag": 0.5,
+      "score_critical": 0.7,
+      "level_label_min_subscore": 0.45,
+      "level_label_max_q": 0.05,
+      "iforest_contamination": 0.1,
+      "iforest_random_state": 20260911
+    },
+    "remediation": {
+      "temporal_mode": "within_cohort",
+      "gate_start": 0.4,
+      "gate_full": 0.8,
+      "max_level_shift": 1.5,
+      "max_total_shift": 2.5,
+      "target_sigma_quantile": 0.5,
+      "max_sigma_gain": 2.5,
+      "min_sigma_for_rescale": 0.8,
+      "alpha_floor": 0.55,
+      "review_ci": 1.96,
+      "review_min_other_courses": 3
+    },
+    "tci": {
+      "credits_high": 24.0,
+      "credits_medium": 9.0,
+      "recency_half_life_semesters": 8.0,
+      "recency_min_weight": 0.6,
+      "bootstrap_iters": 400,
+      "bootstrap_random_state": 20260911,
+      "ci_level": 0.95,
+      "apply_se_floor": true,
+      "min_courses_for_rating": 2
+    }
+  }
+}

@@ -1,0 +1,42 @@
+﻿Sheet,Cột,Kiểu,Ý nghĩa,Ghi chú
+Du_lieu,Năm học,văn bản,"Năm học của lớp học phần, dạng 2019-2020.",Từ 2019-2020 đến 2025-2026 (7 năm).
+Du_lieu,Học kỳ,số nguyên,Học kỳ trong năm học.,"1, 2 = học kỳ chính; 3 = học kỳ hè/phụ (rất ít: 563 dòng)."
+Du_lieu,Mã môn,mã,Học phần (dạng M001…). Cùng mã = cùng học phần ở mọi năm.,93 mã. Tên học phần không công bố.
+Du_lieu,Nhóm môn,mã,"Nhóm nội dung của học phần (N1…N8), do Khoa gán.",Tên nhóm không công bố; dùng để so sánh các môn cùng loại.
+Du_lieu,Số TC,số nguyên,Số tín chỉ của học phần.,1–10; đồ án/thực tập có số TC lớn.
+Du_lieu,Là đồ án/thực tập/khóa luận,Có/Không,"Học phần đồ án, đề án, chuyên đề thực tập, khóa luận tốt nghiệp.","Có = 2.103 dòng. Điểm do giảng viên hướng dẫn chấm theo từng sinh viên, khác học phần lớp; thường chỉ có Thi và Điểm HP."
+Du_lieu,Lớp mang mã EP,Có/Không,Lớp học phần mở riêng cho các chương trình EP (tiên tiến/quốc tế).,Có = 2.726 dòng.
+Du_lieu,Mã lớp học phần,mã,Một lớp học phần cụ thể trong một học kỳ (dạng L0001…).,"877 lớp. Mỗi lớp thuộc đúng một năm học, học kỳ, môn."
+Du_lieu,Sĩ số lớp (trong dữ liệu),số nguyên,Số sinh viên của lớp có mặt trong file này.,Không phải sĩ số đăng ký ban đầu: sinh viên không có dòng điểm không được đếm.
+Du_lieu,Mã SV,mã,Sinh viên (dạng S00001…).,5.067 sinh viên. Cùng mã = cùng sinh viên ở mọi lớp trong file; không có thông tin định danh.
+Du_lieu,Khóa SV,văn bản,Khóa tuyển sinh của sinh viên (K58–K67).,"Để trống ở khoảng 0,1% dòng."
+Du_lieu,Khoa của SV,mã,Khoa/viện quản lý sinh viên (KH01…). Sinh viên các khoa khác vẫn học môn do một khoa đào tạo phụ trách.,Các khoa có dưới 10 sinh viên gộp thành KH-khác. Không có ngành.
+Du_lieu,CC,số thực 0–10,Điểm chuyên cần.,Để trống nếu không có (khoảng 12%); 2019-2020 thiếu nhiều.
+Du_lieu,KTTX1,số thực 0–10,Điểm kiểm tra thường xuyên / giữa kỳ lần 1.,Để trống nếu không có.
+Du_lieu,KTTX2,số thực 0–10,Điểm kiểm tra thường xuyên lần 2.,Rất ít môn có (98% để trống).
+Du_lieu,KTTX (TB),số thực 0–10,Điểm quá trình: trung bình các điểm KTTX của sinh viên.,Thường là thành phần do giảng viên tự chấm.
+Du_lieu,Thi,số thực 0–10,Điểm thi cuối kỳ.,Để trống nếu chưa có (một số lớp 2025-2026). Điểm 0 gồm cả vắng thi.
+Du_lieu,Điểm HP (thang 10),số thực 0–10,"Điểm tổng kết học phần, một chữ số thập phân, điểm lần 1.","Điểm 0 gồm cả sinh viên vắng thi/bỏ học. Đạt học phần khi từ 4,5 theo quy định đào tạo."
+Du_lieu,"Cơ cấu trọng số suy ra (CC/KTTX/Thi, %)",văn bản,Trọng số CC/KTTX/Thi (%) suy ngược từ điểm của chính lớp đó.,"Chủ yếu 10/20/70 trước HK2 2021-22, 10/40/50 từ đó; để trống nếu không khớp (36% dòng). Không phải trọng số chính thức."
+Lop_hoc_phan,"Mã lớp học phần, Năm học, Học kỳ, Mã môn",,Như sheet Du_lieu.,Mỗi dòng là một lớp học phần.
+Lop_hoc_phan,Số lượt SV,số nguyên,Số dòng sinh viên của lớp.,
+Lop_hoc_phan,TB CC / TB KTTX / TB Thi / TB HP,số thực,"Điểm trung bình của lớp cho từng thành phần, bỏ qua ô trống.",
+Lop_hoc_phan,"Tỷ lệ HP ≥ 4,0 / ≥ 4,5 / ≥ 8,5",0–1,"Tỷ lệ sinh viên có Điểm HP đạt ngưỡng, trên số sinh viên có Điểm HP.","≥ 4,5 là ngưỡng đạt học phần theo quy định đào tạo; ≥ 4,0 giữ lại để so với cách tính cũ."
+Thoi_khoa_bieu,Năm học,văn bản,"Năm học của lớp học phần, dạng 2020-2021.","Từ 2020-2021 đến 2026-2027; 2026-2027 là lịch học kỳ hiện tại, chưa có điểm trong Du_lieu.csv. Có 32 dòng chỉ ghi một năm (2023–2026), xem lưu ý."
+Thoi_khoa_bieu,Học kỳ,văn bản,"Mã học kỳ: HK01, HK02 (học kỳ chính); HK03, HKMX, HKMT (học kỳ phụ/đặc biệt).","HK01: 658 dòng, HK02: 464 dòng, các loại còn lại: 48 dòng. HK01/HK02/HK03 tương ứng học kỳ 1/2/3 ở Du_lieu.csv."
+Thoi_khoa_bieu,Hệ,nhãn,Nhóm hệ đào tạo của lớp (Hệ A đến Hệ D).,Hệ A chiếm 954/1.170 dòng. Tên hệ không công bố.
+Thoi_khoa_bieu,Mã HP,mã,Học phần.,"116 mã. Đánh mã riêng, không trùng với Mã môn (M###) của Du_lieu.csv."
+Thoi_khoa_bieu,Số TC,số nguyên,Số tín chỉ của học phần.,Hầu hết là 3 (1.154 dòng); 15 dòng là 2 TC; 1 dòng là 10 TC.
+Thoi_khoa_bieu,Sĩ số ĐK,số nguyên,Số sinh viên đăng ký lớp học phần.,Từ 0 đến 76; 0 là lớp chưa có sinh viên đăng ký. Khác với Sĩ số lớp (trong dữ liệu) ở Du_lieu.csv.
+Thoi_khoa_bieu,Mã LHP,mã,Lớp học phần.,1.090 mã cho 1.170 dòng: một lớp có thể xuất hiện ở nhiều dòng. Không trùng với Mã lớp học phần (L####) của Du_lieu.csv.
+Thoi_khoa_bieu,Thứ,số nguyên,Thứ trong tuần của buổi học: 2 = thứ Hai … 7 = thứ Bảy.,Để trống khi Dạng lịch không phải chuẩn (207 dòng).
+Thoi_khoa_bieu,Tiết bắt đầu,số nguyên,Tiết đầu tiên của buổi học trong ngày.,"Thường gặp các cặp 1-2, 3-4, 5-6, 7-8 (buổi 2 tiết) và 1-3, 5-7 (buổi 3 tiết). Để trống như cột Thứ."
+Thoi_khoa_bieu,Tiết kết thúc,số nguyên,Tiết cuối cùng của buổi học trong ngày.,Số tiết của buổi = Tiết kết thúc − Tiết bắt đầu + 1.
+Thoi_khoa_bieu,Tuần bắt đầu,số nguyên,"Tuần bắt đầu học, đánh số theo lịch của hệ thống xếp lịch.","Cách đánh số không thống nhất giữa các học kỳ (có giá trị 0; HK01 thường bắt đầu ở tuần 29–30, HK02 ở tuần 1). Cần thời gian chính xác thì dùng Ngày bắt đầu/Ngày kết thúc."
+Thoi_khoa_bieu,Tuần kết thúc,số nguyên,Tuần kết thúc của lịch học.,Như Tuần bắt đầu. Để trống khi Dạng lịch không phải chuẩn.
+Thoi_khoa_bieu,Phòng,mã,Phòng học.,"131 mã. Chỉ có mã phòng, không có tên hay sức chứa. Để trống khi chưa xếp phòng."
+Thoi_khoa_bieu,Dạng lịch,nhãn,Cách lịch của dòng được ghi: chuẩn / khác / chưa có.,"chuẩn (963 dòng): lịch lặp hàng tuần, đủ Thứ, Tiết, Tuần và Ngày. khác (57 dòng): lịch theo đợt, chỉ có Ngày bắt đầu và Ngày kết thúc. chưa có (150 dòng): chưa xếp lịch, hầu hết các cột lịch để trống."
+Thoi_khoa_bieu,Ngày bắt đầu,ngày (YYYY-MM-DD),Ngày diễn ra buổi học đầu tiên của dòng.,"Với lịch chuẩn, ngày này đúng với cột Thứ. Để trống ở phần lớn lớp chưa có lịch."
+Thoi_khoa_bieu,Ngày kết thúc,ngày (YYYY-MM-DD),Ngày diễn ra buổi học cuối cùng của dòng.,
+Thoi_khoa_bieu,Số tiết đứng lớp,số nguyên,Số tiết giảng dạy của lớp theo kế hoạch.,"Phần lớn là 45 (lớp 3 TC, 1.017 dòng) hoặc 30 (lớp 2 TC). Giá trị nhỏ hơn, như 22–24, gặp ở lớp học theo đợt; không phải số tiết theo lịch tuần."
+Thoi_khoa_bieu,Số tiết hệ thống,số nguyên,Thông số của hệ thống xếp lịch.,"Luôn bằng 3 ở mọi dòng, không có giá trị phân tích."

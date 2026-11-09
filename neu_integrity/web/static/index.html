@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NEU Academic Integrity &amp; True Competency Analytics</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --panel:#fff; --ink:#15181d; --muted:#5f6672; --line:#e3e6ea;
+    --brand:#1f4e9c; --brand-soft:#eaf0fa;
+    --advanced:#1b6e4a; --proficient:#3a7bbf; --intermediate:#c98a16; --atrisk:#c0392b;
+    --inflation:#c0392b; --steep:#2d6ca8; --distribution:#b5701a; --ok:#6b7280;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme=light]){
+      --bg:#14171c; --panel:#1b1f26; --ink:#eceef1; --muted:#9aa3b0; --line:#2b313a;
+      --brand:#6fa3ea; --brand-soft:#1e2838;
+      --advanced:#4fbe8b; --proficient:#6fa3ea; --intermediate:#e0ae4c; --atrisk:#e8705f;
+      --inflation:#e8705f; --steep:#6fa3ea; --distribution:#e0ae4c; --ok:#8b93a1;
+      color-scheme:dark;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+  header{background:var(--panel);border-bottom:1px solid var(--line);
+    padding:calc(18px + env(safe-area-inset-top,0px)) 20px 18px;position:sticky;top:0;z-index:20}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 16px}
+  h1{margin:0 0 4px;font-size:19px;letter-spacing:-.2px}
+  h2{margin:0 0 14px;font-size:15px;letter-spacing:-.1px}
+  .sub{color:var(--muted);font-size:12.5px;margin:0}
+  .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+  select,input,button{font:inherit;padding:7px 10px;border:1px solid var(--line);
+    border-radius:7px;background:var(--panel);color:var(--ink)}
+  button{cursor:pointer;background:var(--brand);color:#fff;border-color:transparent;font-weight:600}
+  button.ghost{background:var(--panel);color:var(--ink);border-color:var(--line);font-weight:500}
+  main{padding:20px 0 60px}
+  .grid{display:grid;gap:14px}
+  .kpis{grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin-bottom:16px}
+  .cols2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:16px}
+  .kpi .v{font-size:25px;font-weight:650;letter-spacing:-.6px;line-height:1.15}
+  .kpi .l{color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
+  .kpi .n{color:var(--muted);font-size:11.5px;margin-top:4px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin-bottom:16px}
+  .tab{padding:9px 14px;cursor:pointer;border-radius:7px 7px 0 0;color:var(--muted);
+    font-weight:550;border:1px solid transparent;border-bottom:none}
+  .tab[aria-selected=true]{background:var(--panel);color:var(--brand);
+    border-color:var(--line);margin-bottom:-1px}
+  .tabpanel[hidden]{display:none!important}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{border-collapse:collapse;width:100%;font-size:12.5px;min-width:620px}
+  th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);white-space:nowrap}
+  th{background:var(--brand-soft);font-weight:600;position:sticky;top:0;font-size:11.5px;
+    text-transform:uppercase;letter-spacing:.3px}
+  tbody tr:hover{background:var(--brand-soft)}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;
+    font-weight:650;color:#fff;white-space:nowrap}
+  .ev{white-space:normal;min-width:300px;max-width:520px;color:var(--muted);font-size:11.5px}
+  .bar{height:9px;border-radius:5px;background:var(--line);overflow:hidden;min-width:54px}
+  .bar>i{display:block;height:100%;background:var(--brand)}
+  svg{display:block;width:100%;height:auto;overflow:visible}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-top:10px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
+  .note{background:var(--brand-soft);border-left:3px solid var(--brand);padding:11px 13px;
+    border-radius:0 7px 7px 0;font-size:12.5px;margin-top:12px}
+  .muted{color:var(--muted)}
+  .right{margin-left:auto}
+  details{margin-top:10px}
+  summary{cursor:pointer;font-weight:600;font-size:12.5px}
+  pre{background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:11px;
+    overflow-x:auto;font-size:11.5px;margin:8px 0 0}
+  .err{color:var(--atrisk);font-weight:600}
+  @media (max-width:560px){ .kpi .v{font-size:21px} }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>NEU Academic Integrity &amp; True Competency Analytics Platform</h1>
+    <p class="sub">Phát hiện bất thường điểm · Hiệu chỉnh điểm · Phân loại trình độ thực chất
+      — <span id="meta" class="muted">đang nạp…</span></p>
+    <div class="controls">
+      <label>Chế độ hiệu chỉnh
+        <select id="mode">
+          <option value="within_cohort">Trong cùng khoá (within_cohort)</option>
+          <option value="cross_cohort">Liên khoá (cross_cohort)</option>
+        </select>
+      </label>
+      <button id="reload" class="ghost">Tải lại</button>
+      <span class="right muted" id="status"></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="grid kpis" id="kpis"></div>
+
+  <div class="tabs" role="tablist">
+    <div class="tab" role="tab" data-panel="p-overview" aria-selected="true" tabindex="0">Tổng quan</div>
+    <div class="tab" role="tab" data-panel="p-anomaly" aria-selected="false" tabindex="0">1 · Lớp bất thường</div>
+    <div class="tab" role="tab" data-panel="p-plan" aria-selected="false" tabindex="0">2 · Hiệu chỉnh điểm</div>
+    <div class="tab" role="tab" data-panel="p-students" aria-selected="false" tabindex="0">3 · Năng lực thực chất</div>
+    <div class="tab" role="tab" data-panel="p-classify" aria-selected="false" tabindex="0">API phân loại</div>
+  </div>
+
+  <!-- ================= TỔNG QUAN ================= -->
+  <section class="tabpanel" id="p-overview">
+    <div class="grid cols2">
+      <div class="card">
+        <h2>Phân phối GPA danh nghĩa vs TCI (năng lực thực chất)</h2>
+        <div id="chart-hist"></div>
+        <div class="legend">
+          <span><i style="background:var(--ok)"></i>GPA danh nghĩa</span>
+          <span><i style="background:var(--brand)"></i>TCI</span>
+          <span class="muted">— vạch dọc: ngưỡng phân loại 2,50 / 3,20 / 3,60</span>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Phân phối học lực trước / sau hiệu chỉnh</h2>
+        <div id="chart-bands"></div>
+        <div id="tbl-bands" class="scroll"></div>
+      </div>
+      <div class="card">
+        <h2>Lạm phát điểm theo năm học</h2>
+        <div id="chart-years"></div>
+        <div class="legend">
+          <span><i style="background:var(--ok)"></i>Điểm TB gốc</span>
+          <span><i style="background:var(--brand)"></i>Điểm TB sau hiệu chỉnh</span>
+        </div>
+        <div class="note" id="note-years"></div>
+      </div>
+      <div class="card">
+        <h2>GPA danh nghĩa vs TCI theo khoá tuyển sinh</h2>
+        <div id="chart-cohorts"></div>
+        <div class="legend">
+          <span><i style="background:var(--ok)"></i>GPA danh nghĩa</span>
+          <span><i style="background:var(--brand)"></i>TCI</span>
+        </div>
+        <div class="note">Gradient tăng theo khoá ở GPA danh nghĩa là dấu hiệu lạm phát
+          điểm theo thời gian, không phải khoá sau giỏi hơn khoá trước.</div>
+      </div>
+      <div class="card">
+        <h2>Ma trận chuyển nhãn (danh nghĩa → thực chất)</h2>
+        <div id="tbl-transition" class="scroll"></div>
+      </div>
+      <div class="card">
+        <h2>Mô hình Năng lực – Độ dễ</h2>
+        <div id="tbl-model" class="scroll"></div>
+        <details><summary>Toàn bộ số liệu tổng hợp (JSON)</summary><pre id="raw-summary"></pre></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GIẢI PHÁP 1 ================= -->
+  <section class="tabpanel" id="p-anomaly" hidden>
+    <div class="card">
+      <h2>Bảng xếp hạng lớp học phần nghi vấn</h2>
+      <div class="controls">
+        <label>Nhãn <select id="f-label">
+          <option value="">Tất cả</option>
+          <option>HIGH_INFLATION</option><option>UNUSUALLY_STEEP</option>
+          <option>SUSPICIOUS_DISTRIBUTION</option><option>NORMAL</option>
+          <option>INSUFFICIENT_DATA</option>
+        </select></label>
+        <label>Mức độ <select id="f-sev">
+          <option value="">Tất cả</option><option>CRITICAL</option><option>WATCH</option><option>OK</option>
+        </select></label>
+        <label>Điểm ≥ <input id="f-min" type="number" min="0" max="1" step="0.05" value="0.3" style="width:84px"></label>
+        <label>Số dòng <input id="f-limit" type="number" min="5" max="500" step="5" value="40" style="width:84px"></label>
+        <button id="f-go">Lọc</button>
+      </div>
+      <p class="muted" id="anom-count"></p>
+      <div class="scroll" id="tbl-anomaly"></div>
+      <div class="note">
+        <b>Anomaly Score</b> hợp nhất 5 tín hiệu: lệch mức so với mặt bằng của chính môn
+        (<code>level</code>), nén/giãn độ phân tán (<code>dispersion</code>), cơ cấu điểm hai
+        đầu (<code>a_rate</code>), bất tương quan với năng lực nền tảng (<code>decoupling</code>),
+        biến dạng phân phối (<code>shape</code>). Mỗi lớp đều có cột <i>Bằng chứng</i> truy ngược
+        được về số liệu gốc. <code>q_BH</code> là p-value đã hiệu chỉnh đa kiểm định Benjamini–Hochberg.
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GIẢI PHÁP 2 ================= -->
+  <section class="tabpanel" id="p-plan" hidden>
+    <div class="card">
+      <h2>Kế hoạch hiệu chỉnh điểm cấp lớp học phần</h2>
+      <p class="muted">Điểm gốc <b>không bị ghi đè</b>. Hệ thống xuất điểm song song
+        (<i>shadow grade</i>) để Khoa tham khảo khi rà soát đề thi và thang chấm — theo đúng
+        lưu ý của Ban tổ chức về tính chất phân tích vĩ mô.</p>
+      <div class="scroll" id="tbl-plan"></div>
+      <div class="note">
+        <code>γ</code> là cổng tin cậy (0 khi Anomaly Score ≤ 0,40; 1 khi ≥ 0,80) — lớp bình
+        thường <b>không</b> bị can thiệp. <code>Dịch điểm</code> là lượng điểm cộng vào mức lớp.
+        <code>k_σ</code> là hệ số giãn lại độ phân tán cho lớp bị nén σ. <code>α</code> là trọng số
+        tin cậy của học phần khi tính TCI.
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h2>Lượt điểm cần rà soát (REVIEW_REQUIRED)</h2>
+      <p class="muted">Điểm lệch khỏi dự báo năng lực quá khoảng tin cậy 95%. Dự báo dùng
+        năng lực <i>leave-one-out</i> nên không bị chính điểm đang kiểm tra làm nhiễu.</p>
+      <div class="scroll" id="tbl-review"></div>
+    </div>
+  </section>
+
+  <!-- ================= GIẢI PHÁP 3 ================= -->
+  <section class="tabpanel" id="p-students" hidden>
+    <div class="card">
+      <h2>Phân loại sinh viên theo trình độ thực chất</h2>
+      <div class="controls">
+        <label>Mức <select id="s-band">
+          <option value="">Tất cả</option><option>Advanced</option><option>Proficient</option>
+          <option>Intermediate</option><option>At-Risk</option>
+        </select></label>
+        <label>Độ tin cậy <select id="s-conf">
+          <option value="">Tất cả</option><option>HIGH</option><option>MEDIUM</option><option>LOW</option>
+        </select></label>
+        <label>Sắp theo <select id="s-sort">
+          <option value="tci">TCI</option><option value="tci_delta">Chênh TCI−GPA</option>
+          <option value="rank_change">Biến động thứ hạng</option><option value="n_courses">Số học phần</option>
+        </select></label>
+        <label><input type="checkbox" id="s-changed"> Chỉ SV đổi nhãn</label>
+        <label>Số dòng <input id="s-limit" type="number" min="5" max="500" step="5" value="40" style="width:84px"></label>
+        <button id="s-go">Lọc</button>
+      </div>
+      <p class="muted" id="stu-count"></p>
+      <div class="scroll" id="tbl-students"></div>
+      <div class="note">
+        Nhấn vào một dòng để xem <b>báo cáo chẩn đoán</b> của sinh viên đó.
+        <code>UNRATED</code> = dưới 2 học phần trong dữ liệu, hệ thống không xếp loại thay vì
+        đoán. <code>Độ rõ</code> cho biết khoảng tin cậy 95% phủ bao nhiêu mức xếp loại.
+      </div>
+    </div>
+    <div class="card" id="stu-detail" hidden style="margin-top:14px"></div>
+  </section>
+
+  <!-- ================= API ================= -->
+  <section class="tabpanel" id="p-classify" hidden>
+    <div class="card">
+      <h2>Web API nhận dữ liệu điểm và trả kết quả phân loại</h2>
+      <p class="muted">Gửi bảng điểm của một sinh viên, nhận về TCI, khoảng tin cậy và nhãn
+        xếp loại. Đây là endpoint <code>POST /api/v1/classify</code> dùng để tích hợp vào hệ
+        thống Quản lý đào tạo. Xem tài liệu đầy đủ tại <a href="/docs" target="_blank" rel="noopener">/docs</a>.</p>
+      <p><label>Dữ liệu vào (JSON)</label></p>
+      <textarea id="c-input" rows="13" style="width:100%;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+        font-size:12px;padding:11px;border:1px solid var(--line);border-radius:7px;
+        background:var(--panel);color:var(--ink)"></textarea>
+      <div class="controls">
+        <button id="c-go">Gửi yêu cầu phân loại</button>
+        <button id="c-demo" class="ghost">Nạp ví dụ: SV học lớp lạm phát + lớp bị ép điểm</button>
+      </div>
+      <div id="c-out"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+"use strict";
+const $ = (s, r=document) => r.querySelector(s);
+const BAND_COLOR = {Advanced:'var(--advanced)', Proficient:'var(--proficient)',
+  Intermediate:'var(--intermediate)', 'At-Risk':'var(--atrisk)', UNRATED:'var(--ok)'};
+const LABEL_COLOR = {HIGH_INFLATION:'var(--inflation)', UNUSUALLY_STEEP:'var(--steep)',
+  SUSPICIOUS_DISTRIBUTION:'var(--distribution)', NORMAL:'var(--ok)', INSUFFICIENT_DATA:'var(--ok)',
+  UNKNOWN_CLASS:'var(--ok)'};
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c =>
+  ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const nf = (v, d=2) => (v===null||v===undefined||Number.isNaN(v)) ? '—' : Number(v).toFixed(d);
+const pill = (t, color) => `<span class="pill" style="background:${color||'var(--ok)'}">${esc(t)}</span>`;
+const mode = () => $('#mode').value;
+let SUMMARY = null;
+
+async function api(path, opts) {
+  const r = await fetch(path, opts);
+  if (!r.ok) {
+    let detail = r.statusText;
+    try { detail = (await r.json()).detail ?? detail; } catch {}
+    throw new Error(`${r.status} — ${detail}`);
+  }
+  return r.json();
+}
+function setStatus(msg, isErr) {
+  const el = $('#status');
+  el.textContent = msg || '';
+  el.className = isErr ? 'right err' : 'right muted';
+}
+
+/* ---------- Bảng ---------- */
+function table(rows, cols, opts={}) {
+  if (!rows || !rows.length) return '<p class="muted">Không có dữ liệu khớp bộ lọc.</p>';
+  const head = cols.map(c => `<th>${esc(c.label)}</th>`).join('');
+  const body = rows.map((r, i) => {
+    const tds = cols.map(c => {
+      const v = c.get ? c.get(r) : r[c.key];
+      const cls = c.num ? ' class="num"' : (c.cls ? ` class="${c.cls}"` : '');
+      return `<td${cls}>${c.html ? v : esc(v ?? '—')}</td>`;
+    }).join('');
+    const attr = opts.rowKey ? ` data-key="${esc(r[opts.rowKey])}" style="cursor:pointer"` : '';
+    return `<tr${attr}>${tds}</tr>`;
+  }).join('');
+  return `<table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
+}
+
+/* ---------- Biểu đồ SVG (không phụ thuộc thư viện ngoài) ---------- */
+function svgGroupedBars(el, cats, series, opts={}) {
+  const W=640, H=opts.height||260, P={t:14,r:12,b:opts.rotate?62:34,l:46};
+  const iw=W-P.l-P.r, ih=H-P.t-P.b;
+  const max = opts.max ?? Math.max(1e-9, ...series.flatMap(s => s.values.map(v => v||0)));
+  const min = opts.min ?? 0;
+  const y = v => P.t + ih - ((v-min)/(max-min))*ih;
+  const bw = iw/Math.max(cats.length,1), gw = bw*0.72, sw = gw/series.length;
+  let g = '';
+  for (let k=0;k<=4;k++){
+    const v = min + (max-min)*k/4, yy = y(v);
+    g += `<line x1="${P.l}" y1="${yy}" x2="${W-P.r}" y2="${yy}" stroke="var(--line)" stroke-width="1"/>`
+       + `<text x="${P.l-7}" y="${yy+3.5}" text-anchor="end" font-size="10" fill="var(--muted)">${nf(v, opts.dec??1)}</text>`;
+  }
+  cats.forEach((c,i) => {
+    const x0 = P.l + i*bw + (bw-gw)/2;
+    series.forEach((s,j) => {
+      const v = s.values[i]||0, yy=y(Math.max(v,min)), hh=Math.max(0, y(min)-yy);
+      g += `<rect x="${x0+j*sw}" y="${yy}" width="${sw*0.88}" height="${hh}" fill="${s.color}" rx="2">`
+         + `<title>${esc(c)} — ${esc(s.name)}: ${nf(v, opts.dec??2)}</title></rect>`;
+    });
+    const tx = P.l + i*bw + bw/2;
+    g += opts.rotate
+      ? `<text x="${tx}" y="${P.t+ih+13}" font-size="10" fill="var(--muted)" text-anchor="end" transform="rotate(-42 ${tx} ${P.t+ih+13})">${esc(c)}</text>`
+      : `<text x="${tx}" y="${P.t+ih+15}" font-size="10.5" fill="var(--muted)" text-anchor="middle">${esc(c)}</text>`;
+  });
+  g += `<line x1="${P.l}" y1="${y(min)}" x2="${W-P.r}" y2="${y(min)}" stroke="var(--muted)" stroke-width="1"/>`;
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opts.title||'biểu đồ')}">${g}</svg>`;
+}
+
+function svgHistogram(el, centers, a, b, marks) {
+  const W=640,H=270,P={t:14,r:12,b:34,l:46}, iw=W-P.l-P.r, ih=H-P.t-P.b;
+  const max=Math.max(1e-9,...a,...b), x0=centers[0], x1=centers[centers.length-1];
+  const X = v => P.l + ((v-x0)/Math.max(x1-x0,1e-9))*iw;
+  const Y = v => P.t + ih - (v/max)*ih;
+  let g='';
+  for (let k=0;k<=4;k++){
+    const v=max*k/4, yy=Y(v);
+    g+=`<line x1="${P.l}" y1="${yy}" x2="${W-P.r}" y2="${yy}" stroke="var(--line)"/>`
+     + `<text x="${P.l-7}" y="${yy+3.5}" text-anchor="end" font-size="10" fill="var(--muted)">${Math.round(v)}</text>`;
+  }
+  const poly = (vals,color,fill) => {
+    const pts = vals.map((v,i)=>`${X(centers[i])},${Y(v)}`).join(' ');
+    return `<polyline points="${pts}" fill="none" stroke="${color}" stroke-width="2.2"/>`
+      + `<polygon points="${X(centers[0])},${Y(0)} ${pts} ${X(centers[centers.length-1])},${Y(0)}" fill="${color}" opacity="${fill}"/>`;
+  };
+  g += poly(a,'var(--ok)',0.14) + poly(b,'var(--brand)',0.20);
+  (marks||[]).forEach(m => {
+    g += `<line x1="${X(m)}" y1="${P.t}" x2="${X(m)}" y2="${P.t+ih}" stroke="var(--muted)"
+      stroke-width="1" stroke-dasharray="4 3"/>`
+       + `<text x="${X(m)}" y="${P.t-3}" font-size="9.5" fill="var(--muted)" text-anchor="middle">${nf(m,2)}</text>`;
+  });
+  for (let v=0; v<=4.001; v+=0.5)
+    g += `<text x="${X(v)}" y="${P.t+ih+15}" font-size="10.5" fill="var(--muted)" text-anchor="middle">${nf(v,1)}</text>`;
+  g += `<line x1="${P.l}" y1="${Y(0)}" x2="${W-P.r}" y2="${Y(0)}" stroke="var(--muted)"/>`;
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="phân phối GPA và TCI">${g}</svg>`;
+}
+
+/* ---------- Tổng quan ---------- */
+async function loadOverview() {
+  const s = await api(`/api/v1/summary?mode=${mode()}`);
+  SUMMARY = s;
+  const d=s.du_lieu, g1=s.giai_phap_1, g2=s.giai_phap_2, g3=s.giai_phap_3, mm=s.mo_hinh_nang_luc_do_de;
+  $('#meta').textContent =
+    `${d.tong_luot_diem.toLocaleString('vi-VN')} lượt điểm · ${d.so_sinh_vien.toLocaleString('vi-VN')} SV · `
+    + `${d.so_lop_hoc_phan} lớp · ${d.so_mon} môn · ${d.nam_hoc[0]} → ${d.nam_hoc[d.nam_hoc.length-1]} · `
+    + `chạy ${s.thoi_gian_chay_giay}s`;
+
+  const kpi = (l,v,n) => `<div class="card kpi"><div class="l">${l}</div><div class="v">${v}</div><div class="n">${n}</div></div>`;
+  $('#kpis').innerHTML = [
+    kpi('Lớp bị gắn cờ', g1.so_lop_gan_co, `${g1.ty_le_gan_co_pct}% của ${g1.so_lop_cham_diem} lớp · ${g1.so_lop_critical} CRITICAL`),
+    kpi('Lớp được hiệu chỉnh', g2.so_lop_hieu_chinh, `${g2.so_lop_ha_muc} hạ mức · ${g2.so_lop_nang_muc} nâng mức`),
+    kpi('Lượt điểm thay đổi', g2.luot_diem_thay_doi.toLocaleString('vi-VN'), `${g2.ty_le_luot_thay_doi_pct}% · TB ${nf(g2.diem_tb_goc)} → ${nf(g2.diem_tb_hieu_chinh)}`),
+    kpi('REVIEW_REQUIRED', g2.so_luot_review_required.toLocaleString('vi-VN'), 'lượt lệch dự báo năng lực > KTC 95%'),
+    kpi('TCI trung bình', nf(g3.tci_trung_binh,3), `GPA danh nghĩa ${nf(g3.gpa_danh_nghia_trung_binh,3)} (lệch ${nf(g3.chenh_tci_gpa,3)})`),
+    kpi('SV đổi xếp loại', g3.so_sinh_vien_doi_nhan, `${g3.ty_le_doi_nhan_pct}% của ${g3.so_sinh_vien_xep_loai_duoc} SV xếp loại được`),
+    kpi('Chưa đủ dữ liệu', g3.so_sinh_vien_unrated, `UNRATED — dưới 2 học phần`),
+    kpi('R² mô hình', nf(mm.r_binh_phuong,3), `σ phần dư ${nf(mm.sigma_phan_du,3)} · ${mm.so_vong_lap} vòng`),
+  ].join('');
+
+  // Histogram
+  const h = await api(`/api/v1/gpa-histogram?mode=${mode()}`);
+  svgHistogram($('#chart-hist'), h.bin_centers, h.gpa_danh_nghia, h.tci, h.nguong_phan_loai);
+
+  // Bands
+  const dist = await api(`/api/v1/distribution?mode=${mode()}`);
+  const bands = dist.truoc_sau;
+  svgGroupedBars($('#chart-bands'), bands.map(b=>b.band), [
+    {name:'Trước', values:bands.map(b=>b.truoc_n), color:'var(--ok)'},
+    {name:'Sau',   values:bands.map(b=>b.sau_n),   color:'var(--brand)'},
+  ], {dec:0, height:230});
+  $('#tbl-bands').innerHTML = table(bands, [
+    {label:'Mức', key:'band', html:true, get:r=>pill(r.band, BAND_COLOR[r.band])},
+    {label:'Trước', key:'truoc_n', num:true},
+    {label:'%', num:true, get:r=>nf(r.truoc_pct,2)},
+    {label:'Sau', key:'sau_n', num:true},
+    {label:'%', num:true, get:r=>nf(r.sau_pct,2)},
+    {label:'Chênh', num:true, html:true, get:r=>{
+      const c = r.chenh_n>0?'var(--atrisk)':(r.chenh_n<0?'var(--advanced)':'var(--muted)');
+      return `<span style="color:${c};font-weight:650">${r.chenh_n>0?'+':''}${r.chenh_n}</span>`;}},
+  ]);
+
+  // Years
+  const yrs = dist.tac_dong_theo_nam_hoc;
+  svgGroupedBars($('#chart-years'), yrs.map(r=>r.academic_year), [
+    {name:'Điểm gốc', values:yrs.map(r=>r.diem_goc), color:'var(--ok)'},
+    {name:'Sau hiệu chỉnh', values:yrs.map(r=>r.diem_hieu_chinh), color:'var(--brand)'},
+  ], {min:6, max:8.6, dec:2, rotate:true, height:250});
+  const ye = mm.hieu_ung_nam_hoc, keys = Object.keys(ye);
+  const amp = Math.max(...Object.values(ye)) - Math.min(...Object.values(ye));
+  $('#note-years').innerHTML =
+    `Điểm TB toàn khoa tăng từ <b>${nf(yrs[0].diem_goc)}</b> (${esc(yrs[0].academic_year)}) lên `
+    + `<b>${nf(yrs[yrs.length-1].diem_goc)}</b> (${esc(yrs[yrs.length-1].academic_year)}). `
+    + `Sau khi khử thành phần năng lực sinh viên, hiệu ứng độ dễ chấm điểm theo năm học biến thiên `
+    + `<b>${nf(amp)} điểm</b> (từ ${nf(ye[keys[0]])} đến ${nf(ye[keys[keys.length-1]])}) — tức phần lớn mức tăng `
+    + `là <b>lạm phát điểm</b>, không phải sinh viên khoá sau giỏi hơn.`;
+
+  // Cohorts
+  const co = dist.tac_dong_theo_khoa.filter(r=>r.n>=20);
+  svgGroupedBars($('#chart-cohorts'), co.map(r=>r.cohort), [
+    {name:'GPA danh nghĩa', values:co.map(r=>r.gpa_danh_nghia), color:'var(--ok)'},
+    {name:'TCI', values:co.map(r=>r.tci), color:'var(--brand)'},
+  ], {min:2, max:4, dec:2, height:250});
+
+  // Transition
+  const order=['Advanced','Proficient','Intermediate','At-Risk'], tm=dist.ma_tran_chuyen_nhan;
+  $('#tbl-transition').innerHTML =
+    `<table><thead><tr><th>Danh nghĩa ↓ / Thực chất →</th>${order.map(o=>`<th>${o}</th>`).join('')}</tr></thead><tbody>`
+    + order.map(r=>`<tr><td><b>${r}</b></td>` + order.map(c=>{
+        const v=(tm[r]||{})[c]??0;
+        const bg = v===0?'':(r===c?'background:var(--brand-soft)':'background:color-mix(in srgb,var(--atrisk) 16%,transparent)');
+        return `<td class="num" style="${bg}">${v}</td>`;
+      }).join('') + '</tr>').join('')
+    + '</tbody></table>'
+    + '<p class="muted" style="font-size:11.5px;margin:8px 0 0">Ô ngoài đường chéo = sinh viên đổi mức khi chuyển từ GPA danh nghĩa sang TCI.</p>';
+
+  // Model
+  const sem = {0:'HK1',1:'HK2',2:'HK3'};
+  $('#tbl-model').innerHTML = `<table><tbody>
+    <tr><th>μ (mặt bằng chung, thang 10)</th><td class="num">${nf(mm.mu,3)}</td></tr>
+    <tr><th>σ phần dư cấp lượt điểm</th><td class="num">${nf(mm.sigma_phan_du,3)}</td></tr>
+    <tr><th>R² của mô hình hai chiều</th><td class="num">${nf(mm.r_binh_phuong,3)}</td></tr>
+    <tr><th>σ của θ (năng lực sinh viên)</th><td class="num">${nf(mm.sd_nang_luc_theta,3)}</td></tr>
+    <tr><th>σ của δ (độ dễ lớp)</th><td class="num">${nf(mm.sd_do_de_delta,3)}</td></tr>
+    <tr><th>σ của r (độ dễ <i>bất thường</i>)</th><td class="num">${nf(mm.sd_do_de_bat_thuong_r,3)}</td></tr>
+    <tr><th>Hiệu ứng năm học</th><td class="num">${Object.entries(mm.hieu_ung_nam_hoc).map(([k,v])=>nf(v,2)).join(' · ')}</td></tr>
+    <tr><th>Hiệu ứng học kỳ</th><td class="num">${Object.entries(mm.hieu_ung_hoc_ky).map(([k,v])=>`${sem[k]??k} ${nf(v,2)}`).join(' · ')}</td></tr>
+    <tr><th>Spearman với Isolation Forest</th><td class="num">${nf(SUMMARY.giai_phap_1.tuong_quan_spearman_voi_isolation_forest,3)}</td></tr>
+    <tr><th>Kiểm chứng: bảo toàn thứ hạng</th><td class="num">${g2.kiem_chung_tinh_chat.bao_toan_thu_hang_moi_lop ? '✅ 0 cặp bị đảo' : '❌'}</td></tr>
+    <tr><th>Kiểm chứng: điểm trong [0;10]</th><td class="num">${g2.kiem_chung_tinh_chat.trong_khoang_0_10 ? '✅' : '❌'}</td></tr>
+  </tbody></table>`;
+  $('#raw-summary').textContent = JSON.stringify(s, null, 2);
+}
+
+/* ---------- Giải pháp 1 ---------- */
+async function loadAnomalies() {
+  const p = new URLSearchParams({mode:mode(), min_score:$('#f-min').value, limit:$('#f-limit').value});
+  if ($('#f-label').value) p.set('label', $('#f-label').value);
+  if ($('#f-sev').value) p.set('severity', $('#f-sev').value);
+  const r = await api('/api/v1/anomalies?'+p);
+  $('#anom-count').textContent = `${r.total} lớp khớp bộ lọc — hiển thị ${r.items.length}.`;
+  $('#tbl-anomaly').innerHTML = table(r.items, [
+    {label:'#', key:'rank', num:true},
+    {label:'Lớp', key:'class_key'},
+    {label:'Năm', key:'academic_year'},
+    {label:'HK', key:'semester', num:true},
+    {label:'Môn', key:'course_id'},
+    {label:'n', key:'n', num:true},
+    {label:'TB', num:true, get:r=>nf(r.mean_score)},
+    {label:'σ', num:true, get:r=>nf(r.sd_score)},
+    {label:'%A', num:true, get:r=>nf((r.a_rate??0)*100,1)},
+    {label:'%trượt', num:true, get:r=>nf((r.fail_rate??0)*100,1)},
+    {label:'r_c', num:true, get:r=>nf(r.resid_leniency)},
+    {label:'q_BH', num:true, get:r=>r.level_q_bh==null?'—':Number(r.level_q_bh).toExponential(1)},
+    {label:'corr θ', num:true, get:r=>nf(r.ability_corr)},
+    {label:'Điểm', html:true, get:r=>
+      `<div style="display:flex;align-items:center;gap:7px"><div class="bar" style="flex:1">
+       <i style="width:${(r.anomaly_score*100).toFixed(0)}%"></i></div>
+       <b style="font-variant-numeric:tabular-nums">${nf(r.anomaly_score,3)}</b></div>`},
+    {label:'Nhãn', html:true, get:r=>pill(r.anomaly_label, LABEL_COLOR[r.anomaly_label])},
+    {label:'IF', html:true, get:r=>r.iforest_outlier?pill('ngoại lai','var(--distribution)'):'<span class="muted">—</span>'},
+    {label:'Bằng chứng', key:'evidence', cls:'ev'},
+  ]);
+}
+
+/* ---------- Giải pháp 2 ---------- */
+async function loadPlan() {
+  const r = await api(`/api/v1/adjustment-plan?mode=${mode()}&only_applied=true&limit=60`);
+  $('#tbl-plan').innerHTML = table(r.items, [
+    {label:'Lớp', key:'class_key'},
+    {label:'Năm', key:'academic_year'},
+    {label:'Môn', key:'course_id'},
+    {label:'n', key:'n', num:true},
+    {label:'TB lớp', num:true, get:r=>nf(r.mean_score)},
+    {label:'σ lớp', num:true, get:r=>nf(r.sd_score)},
+    {label:'Điểm BT', num:true, get:r=>nf(r.anomaly_score,3)},
+    {label:'Nhãn', html:true, get:r=>pill(r.anomaly_label, LABEL_COLOR[r.anomaly_label])},
+    {label:'γ', num:true, get:r=>nf(r.gamma,3)},
+    {label:'Dịch điểm', num:true, html:true, get:r=>{
+      const v=r.score_shift??0, c=v<0?'var(--atrisk)':(v>0?'var(--advanced)':'var(--muted)');
+      return `<span style="color:${c};font-weight:650">${v>0?'+':''}${nf(v)}</span>`;}},
+    {label:'k_σ', num:true, get:r=>nf(r.sigma_gain_k,3)},
+    {label:'α', num:true, get:r=>nf(r.alpha,3)},
+    {label:'Hướng', key:'adjustment_direction'},
+    {label:'Chạm trần', html:true, get:r=>r.shift_capped?pill('có','var(--distribution)'):'<span class="muted">—</span>'},
+  ]);
+  const rr = await api(`/api/v1/review-required?mode=${mode()}&limit=40`);
+  $('#tbl-review').innerHTML = table(rr.items, [
+    {label:'SV', key:'student_id'},
+    {label:'Lớp', key:'class_key'},
+    {label:'Môn', key:'course_id'},
+    {label:'Học kỳ', key:'term_label'},
+    {label:'Điểm', num:true, get:r=>nf(r.score_10,1)},
+    {label:'Dự báo', num:true, get:r=>nf(r.predicted_score)},
+    {label:'KTC 95%', num:true, get:r=>`${nf(r.prediction_ci_lo)} – ${nf(r.prediction_ci_hi)}`},
+    {label:'z', num:true, get:r=>nf(r.prediction_z)},
+    {label:'Sau hiệu chỉnh', num:true, get:r=>nf(r.adjusted_score)},
+    {label:'Lý do', key:'review_reason', cls:'ev'},
+  ]);
+}
+
+/* ---------- Giải pháp 3 ---------- */
+async function loadStudents() {
+  const p = new URLSearchParams({mode:mode(), limit:$('#s-limit').value,
+    sort_by:$('#s-sort').value, descending:'true', rated_only:'true'});
+  if ($('#s-band').value) p.set('band', $('#s-band').value);
+  if ($('#s-conf').value) p.set('confidence', $('#s-conf').value);
+  if ($('#s-changed').checked) p.set('changed_only','true');
+  const r = await api('/api/v1/students?'+p);
+  $('#stu-count').textContent = `${r.total} sinh viên khớp bộ lọc — hiển thị ${r.items.length}.`;
+  $('#tbl-students').innerHTML = table(r.items, [
+    {label:'Hạng', key:'rank_tci', num:true},
+    {label:'Mã SV', key:'student_id'},
+    {label:'Khoá', key:'cohort'},
+    {label:'HP', key:'n_courses', num:true},
+    {label:'TC', key:'credits_total', num:true},
+    {label:'GPA danh nghĩa', num:true, get:r=>nf(r.nominal_gpa,3)},
+    {label:'TCI', num:true, get:r=>nf(r.tci,3)},
+    {label:'KTC 95%', num:true, get:r=>`${nf(r.tci_ci_lo)} – ${nf(r.tci_ci_hi)}`},
+    {label:'Chênh', num:true, html:true, get:r=>{
+      const v=r.tci_delta??0, c=v<-0.005?'var(--atrisk)':(v>0.005?'var(--advanced)':'var(--muted)');
+      return `<span style="color:${c};font-weight:650">${v>0?'+':''}${nf(v,3)}</span>`;}},
+    {label:'Danh nghĩa', html:true, get:r=>pill(r.nominal_band, BAND_COLOR[r.nominal_band])},
+    {label:'Thực chất', html:true, get:r=>pill(r.tci_band, BAND_COLOR[r.tci_band])},
+    {label:'Đổi', html:true, get:r=>r.band_changed?pill('có','var(--distribution)'):'<span class="muted">—</span>'},
+    {label:'Độ rõ', key:'band_ambiguity'},
+    {label:'Tin cậy', key:'confidence'},
+    {label:'HP bất thường', key:'n_flagged_courses', num:true},
+    {label:'Δ hạng', num:true, get:r=>r.rank_change==null?'—':(r.rank_change>0?'+':'')+nf(r.rank_change,0)},
+  ], {rowKey:'student_id'});
+
+  $('#tbl-students').querySelectorAll('tr[data-key]').forEach(tr =>
+    tr.addEventListener('click', () => showStudent(tr.dataset.key)));
+}
+
+async function showStudent(id) {
+  const box = $('#stu-detail');
+  box.hidden = false;
+  box.innerHTML = '<p class="muted">Đang nạp…</p>';
+  box.scrollIntoView({behavior:'smooth', block:'nearest'});
+  try {
+    const r = await api(`/api/v1/students/${encodeURIComponent(id)}?mode=${mode()}`);
+    const s = r.sinh_vien;
+    box.innerHTML = `
+      <h2>Báo cáo chẩn đoán — ${esc(s.student_id)}</h2>
+      <div class="grid kpis" style="margin-bottom:12px">
+        <div class="card kpi"><div class="l">TCI</div><div class="v">${nf(s.tci,3)}</div>
+          <div class="n">KTC 95%: ${nf(s.tci_ci_lo)} – ${nf(s.tci_ci_hi)} (se ${nf(s.tci_se,3)})</div></div>
+        <div class="card kpi"><div class="l">GPA danh nghĩa</div><div class="v">${nf(s.nominal_gpa,3)}</div>
+          <div class="n">chênh ${s.tci_delta>0?'+':''}${nf(s.tci_delta,3)}</div></div>
+        <div class="card kpi"><div class="l">Xếp loại</div>
+          <div class="v" style="font-size:17px">${pill(s.nominal_band, BAND_COLOR[s.nominal_band])} → ${pill(s.tci_band, BAND_COLOR[s.tci_band])}</div>
+          <div class="n">${esc(s.band_ambiguity)} · tin cậy ${esc(s.confidence)}</div></div>
+        <div class="card kpi"><div class="l">Độ phủ</div><div class="v">${s.n_courses}</div>
+          <div class="n">học phần · ${nf(s.credits_total,0)} TC · n_eff ${nf(s.n_effective,1)}</div></div>
+      </div>
+      <div class="note"><b>Giải thích:</b> ${esc(s.explanation)}</div>
+      ${s.top_drivers ? `<div class="note"><b>Học phần ảnh hưởng lớn nhất:</b><br>${esc(s.top_drivers).replace(/ \| /g,'<br>')}</div>` : ''}
+      <h2 style="margin-top:16px">Bảng điểm trước / sau hiệu chỉnh</h2>
+      <div class="scroll">${table(r.hoc_phan, [
+        {label:'Lớp', key:'class_key'},
+        {label:'Môn', key:'course_id'},
+        {label:'Học kỳ', key:'term_label'},
+        {label:'TC', key:'credits', num:true},
+        {label:'Điểm gốc', num:true, get:x=>nf(x.score_10,1)},
+        {label:'Thang 4', num:true, get:x=>nf(x.grade_point_4,1)},
+        {label:'Sau hiệu chỉnh', num:true, get:x=>nf(x.adjusted_score)},
+        {label:'Thang 4', num:true, get:x=>nf(x.adjusted_point_4,1)},
+        {label:'Chênh', num:true, html:true, get:x=>{
+          const v=x.score_delta??0, c=v<-0.005?'var(--atrisk)':(v>0.005?'var(--advanced)':'var(--muted)');
+          return `<span style="color:${c};font-weight:650">${v>0?'+':''}${nf(v)}</span>`;}},
+        {label:'α', num:true, get:x=>nf(x.alpha_credit_weight,3)},
+        {label:'Điểm BT lớp', num:true, get:x=>nf(x.anomaly_score,3)},
+        {label:'Nhãn lớp', html:true, get:x=>pill(x.anomaly_label??'NORMAL', LABEL_COLOR[x.anomaly_label??'NORMAL'])},
+        {label:'Rà soát', html:true, get:x=>x.review_required?pill('REVIEW','var(--distribution)'):'<span class="muted">—</span>'},
+      ])}</div>`;
+  } catch (e) {
+    box.innerHTML = `<p class="err">Lỗi: ${esc(e.message)}</p>`;
+  }
+}
+
+/* ---------- API phân loại ---------- */
+const DEMO = {
+  student_id: "SV_THU_NGHIEM",
+  mode: "within_cohort",
+  courses: [
+    {class_id:"L0170", course_id:"M057", score_10:9.8, credits:3},
+    {class_id:"L0822", course_id:"M037", score_10:4.0, credits:3},
+    {class_id:"L0168", course_id:"M002", score_10:8.5, credits:3},
+    {class_id:"L0548", course_id:"M050", score_10:9.5, credits:3},
+    {class_id:"L0093", course_id:"M013", score_10:6.5, credits:3}
+  ]
+};
+function loadDemo(){ $('#c-input').value = JSON.stringify(DEMO, null, 2); }
+
+async function doClassify() {
+  const out = $('#c-out');
+  out.innerHTML = '<p class="muted">Đang gửi…</p>';
+  let payload;
+  try { payload = JSON.parse($('#c-input').value); }
+  catch (e) { out.innerHTML = `<p class="err">JSON không hợp lệ: ${esc(e.message)}</p>`; return; }
+  try {
+    const r = await api('/api/v1/classify', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
+    out.innerHTML = `
+      <div class="grid kpis" style="margin:14px 0">
+        <div class="card kpi"><div class="l">TCI</div><div class="v">${nf(r.tci,3)}</div>
+          <div class="n">KTC 95%: ${nf(r.tci_ci_lo)} – ${nf(r.tci_ci_hi)}</div></div>
+        <div class="card kpi"><div class="l">GPA danh nghĩa</div><div class="v">${nf(r.gpa_danh_nghia,3)}</div>
+          <div class="n">chênh ${r.tci_delta>0?'+':''}${nf(r.tci_delta,3)}</div></div>
+        <div class="card kpi"><div class="l">Xếp loại</div>
+          <div class="v" style="font-size:17px">${pill(r.nominal_band, BAND_COLOR[r.nominal_band])} → ${pill(r.tci_band, BAND_COLOR[r.tci_band])}</div>
+          <div class="n">${esc(r.band_ambiguity)} · tin cậy ${esc(r.confidence)}</div></div>
+        <div class="card kpi"><div class="l">Học phần bất thường</div>
+          <div class="v">${r.so_hoc_phan_bat_thuong}/${r.so_hoc_phan}</div>
+          <div class="n">${nf(r.tong_tin_chi,0)} tín chỉ · n_eff ${nf(r.n_effective,1)}</div></div>
+      </div>
+      ${r.ghi_chu?.length ? `<div class="note"><b>Ghi chú:</b><ul style="margin:6px 0 0;padding-left:20px">
+        ${r.ghi_chu.map(n=>`<li>${esc(n)}</li>`).join('')}</ul></div>` : ''}
+      <div class="scroll" style="margin-top:12px">${table(r.chi_tiet_hoc_phan, [
+        {label:'Lớp', key:'class_id'},
+        {label:'Môn', key:'course_id'},
+        {label:'TC', key:'credits', num:true},
+        {label:'Điểm gốc', num:true, get:x=>nf(x.score_10,1)},
+        {label:'Thang 4', num:true, get:x=>nf(x.grade_point_4,1)},
+        {label:'Sau hiệu chỉnh', num:true, get:x=>nf(x.adjusted_score)},
+        {label:'Thang 4', num:true, get:x=>nf(x.adjusted_point_4,1)},
+        {label:'Chênh', num:true, html:true, get:x=>{
+          const v=x.score_delta??0, c=v<-0.005?'var(--atrisk)':(v>0.005?'var(--advanced)':'var(--muted)');
+          return `<span style="color:${c};font-weight:650">${v>0?'+':''}${nf(v)}</span>`;}},
+        {label:'Điểm BT', num:true, get:x=>nf(x.anomaly_score,3)},
+        {label:'Nhãn', html:true, get:x=>pill(x.anomaly_label, LABEL_COLOR[x.anomaly_label])},
+        {label:'α', num:true, get:x=>nf(x.alpha_credit_weight,3)},
+        {label:'w_TCI', num:true, get:x=>nf(x.w_tci,3)},
+      ])}</div>
+      <details open><summary>Phản hồi JSON đầy đủ</summary><pre>${esc(JSON.stringify(r,null,2))}</pre></details>`;
+  } catch (e) {
+    out.innerHTML = `<p class="err">Lỗi: ${esc(e.message)}</p>`;
+  }
+}
+
+/* ---------- Tabs & khởi động ---------- */
+const LOADERS = {'p-overview':loadOverview, 'p-anomaly':loadAnomalies,
+  'p-plan':loadPlan, 'p-students':loadStudents, 'p-classify':async()=>{}};
+const loaded = new Set();
+
+function selectTab(id) {
+  document.querySelectorAll('.tab').forEach(t =>
+    t.setAttribute('aria-selected', String(t.dataset.panel === id)));
+  document.querySelectorAll('.tabpanel').forEach(p => { p.hidden = (p.id !== id); });
+  if (!loaded.has(id)) {
+    loaded.add(id);
+    run(LOADERS[id]);
+  }
+}
+async function run(fn) {
+  try { setStatus('đang nạp…'); await fn(); setStatus(''); }
+  catch (e) { setStatus('Lỗi: ' + e.message, true); console.error(e); }
+}
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => selectTab(t.dataset.panel));
+  t.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectTab(t.dataset.panel); }
+  });
+});
+function reloadAll() {
+  loaded.clear();
+  const cur = document.querySelector('.tab[aria-selected=true]').dataset.panel;
+  loaded.add(cur);
+  run(LOADERS[cur]);
+}
+$('#mode').addEventListener('change', reloadAll);
+$('#reload').addEventListener('click', reloadAll);
+$('#f-go').addEventListener('click', () => run(loadAnomalies));
+$('#s-go').addEventListener('click', () => run(loadStudents));
+$('#c-go').addEventListener('click', doClassify);
+$('#c-demo').addEventListener('click', loadDemo);
+
+loadDemo();
+selectTab('p-overview');
+</script>
+</body>
+</html>
